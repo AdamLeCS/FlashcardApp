@@ -1,6 +1,7 @@
 
 import java.awt.Color;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 public class GUI {
@@ -14,5 +15,7 @@ public class GUI {
         frame.getContentPane().setBackground(Color.LIGHT_GRAY);
         frame.setSize(400, 400);
         frame.setVisible(true);
+
+        JButton button = new JButton("Click me");
     }
 }
