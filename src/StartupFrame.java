@@ -4,13 +4,16 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class StartupFrame extends JFrame implements ActionListener {
 
-        StartupFrame() {
+    ArrayList<FlashcardSet> allSets = new ArrayList<>();
+
+    StartupFrame() {
         
         // This block is for misc window stuff
         // Use .getImage to get the Image from the imageicon, which can be used in the .setIconImage method
@@ -42,7 +45,6 @@ public class StartupFrame extends JFrame implements ActionListener {
         JPanel westPanel = new JPanel();
         westPanel.setPreferredSize(new Dimension(70, 100));
         this.add(westPanel, BorderLayout.WEST);
-
 
         
         this.setVisible(true);
