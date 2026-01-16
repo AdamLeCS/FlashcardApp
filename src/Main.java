@@ -14,7 +14,6 @@ public class Main {
             e.printStackTrace();
         }
 
-        FlashcardSet test = new FlashcardSet("Test");
         StartupFrame mainFrame = new StartupFrame();
 
     }

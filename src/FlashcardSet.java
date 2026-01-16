@@ -13,9 +13,13 @@ public class FlashcardSet {
     FlashcardSet(String setName) {
         flashcards = new ArrayList<>();
         lastTimeOpened = System.currentTimeMillis(); 
-        filePath = Paths.get("./Flashcard_Sets/" + setName + ".txt");
+        filePath = Paths.get("./Flashcard_Sets/" + setName + ".txt"); // Creates new file for the set
         try {
-            Files.createFile(filePath);
+            if (!Files.exists(filePath)) {
+                Files.createFile(filePath);
+            } else {
+                System.out.println("File already exists");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

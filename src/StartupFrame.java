@@ -2,16 +2,21 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class StartupFrame extends JFrame implements ActionListener {
 
     ArrayList<FlashcardSet> allSets = new ArrayList<>();
+    JButton flashcardSetsButton;
+    JButton newSetButton;
 
     StartupFrame() {
         
@@ -46,15 +51,38 @@ public class StartupFrame extends JFrame implements ActionListener {
         westPanel.setPreferredSize(new Dimension(70, 100));
         this.add(westPanel, BorderLayout.WEST);
 
+        // Central panel with main buttons
+
+        JPanel center = new JPanel();
+        center.setBackground(Color.WHITE);
+        center.setLayout(new GridLayout(2, 2, 10, 10));
+
+        // Button to create a new set
+        newSetButton = new JButton("Create a new set");
+        newSetButton.setFocusable(false);
+        newSetButton.setBounds(30, 30, 200, 100);
+        newSetButton.addActionListener(this);
+        center.add(newSetButton);
         
+        this.add(center, BorderLayout.CENTER);
+        
+
         this.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-    }
+        if (e.getSource() == newSetButton) {
+            String newSetName = JOptionPane.showInputDialog("What do you want the set name to be?");
+            if (newSetName != null) {
+                FlashcardSet newSet = new FlashcardSet(newSetName);
+            } else {
+                JOptionPane.showMessageDialog(this,"Set names cannot be empty");
+            }
 
+            //FlashcardSet test = new FlashcardSet("Test");
+        }
+    }
 
 }
  
