@@ -1,4 +1,4 @@
-// Class for every flashcard objects
+// Class for every flashcard object
 public class Flashcard {
     String term;
     String definition;

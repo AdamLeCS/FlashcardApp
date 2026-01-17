@@ -1,8 +1,6 @@
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class FlashcardSet {
@@ -10,17 +8,14 @@ public class FlashcardSet {
     long lastTimeOpened; // for "recently opened" sorting option
     Path filePath;
 
-    FlashcardSet(String setName) {
+    FlashcardSet(String setName, Path file) {
         flashcards = new ArrayList<>();
         lastTimeOpened = System.currentTimeMillis(); 
-        filePath = Paths.get("./Flashcard_Sets/" + setName + ".txt"); // Creates new file for the set
+        filePath = file;
+        // Creates the file for this set in Flashcard_Sets folder
         try {
-            if (!Files.exists(filePath)) {
-                Files.createFile(filePath);
-            } else {
-                System.out.println("File already exists");
-            }
-        } catch (IOException e) {
+            Files.createFile(filePath);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

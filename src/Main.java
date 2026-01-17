@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 
 public class Main {
    public static void main(String[] args) throws Exception {
-        // Creates the folder for all flashcard set files
+        // Creates the folder for all flashcard set files, if it doesn't exist
         Path path = Paths.get("./Flashcard_Sets");
         try {
             Files.createDirectories(path);

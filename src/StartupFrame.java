@@ -5,6 +5,9 @@ import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -70,19 +73,21 @@ public class StartupFrame extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
+    // All button methods here    
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == newSetButton) {
+        if (e.getSource() == newSetButton) { // Creates a new set if the inputted name is valid
             String newSetName = JOptionPane.showInputDialog("What do you want the set name to be?");
-            if (newSetName != null) {
-                FlashcardSet newSet = new FlashcardSet(newSetName);
+            Path filePath = Paths.get("./Flashcard_Sets/" + newSetName + ".txt");
+            if (!newSetName.equals("") && !Files.exists(filePath)) {
+                FlashcardSet newSet = new FlashcardSet(newSetName, filePath);
+                SetFrame newSetFrame = new SetFrame(newSet);
+                this.dispose();
+            } else if (newSetName.equals("")) {
+                JOptionPane.showMessageDialog(this, "Set names cannot be empty");
             } else {
-                JOptionPane.showMessageDialog(this,"Set names cannot be empty");
+                JOptionPane.showMessageDialog(this, "This set name is taken. Try another name!");
             }
-
-            //FlashcardSet test = new FlashcardSet("Test");
         }
     }
-
 }
- 
