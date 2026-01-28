@@ -113,7 +113,7 @@ public class StartupFrame extends JFrame{
                     allSets.add(newSetName);
                     // Create file for the set
                     Files.createFile(filePath);
-                    currentSet = new FlashcardSet(newSetName, filePath);
+                    currentSet = new FlashcardSet(newSetName);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -246,6 +246,7 @@ public class StartupFrame extends JFrame{
         center.setBackground(Color.WHITE);
         center.setLayout(new GridLayout(2, 2, 10, 10));
         card.add(center, BorderLayout.CENTER);
+        
 
 
         return card;
