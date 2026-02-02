@@ -16,7 +16,6 @@ public class FlashcardSet {
             this.filePath = path;
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("1");
         }
         this.name = setName;
         

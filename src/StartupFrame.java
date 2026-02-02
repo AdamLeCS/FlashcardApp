@@ -14,6 +14,7 @@ import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -196,6 +197,7 @@ public class StartupFrame extends JFrame{
         JPanel center = new JPanel();
         center.setBackground(Color.WHITE);
         center.setLayout(new GridLayout(2, 2, 10, 10));
+        center.add(new JLabel("IN SET CARD"));
         card.add(center, BorderLayout.CENTER);
 
 
@@ -242,14 +244,44 @@ public class StartupFrame extends JFrame{
 
         // Central panel with sets
         // Will display 4 sets at a time
-        JPanel center = new JPanel();
+        JPanel center = new JPanel(new CardLayout());
         center.setBackground(Color.WHITE);
-        center.setLayout(new GridLayout(2, 2, 10, 10));
+        
+        // Create panels that card layout will cycle through
+        JPanel newCard = null;
+        JButton nextButton;
+        int cardNum = 0;
+        for (int i = 0; i < allSets.size(); i++) {
+            if (i % 4 == 0) {
+                // if this is the first iteration of the loop, set newCard to new panel
+                if (newCard == null) {
+                    newCard = new JPanel();
+                } else { // if it isn't the first iteration, add the previous card and reset newCard
+                    center.add(newCard, cardNum++);
+                    newCard = new JPanel();
+                } // after resetting/instantiating newCard, set the layout and add the first button
+                newCard.setLayout(new GridLayout(2, 2, 10, 10));
+            }
+            nextButton = makeNextSetButton(i);
+            newCard.add(nextButton);
+        }
+        // add final card
+        center.add(newCard, cardNum);
+
         card.add(center, BorderLayout.CENTER);
         
-
-
         return card;
+    }
+
+    private JButton makeNextSetButton(int index) {
+        JButton newButton = new JButton(allSets.get(index));
+        newButton.setFocusable(false);
+        newButton.addActionListener(e -> {
+            currentSet = new FlashcardSet(newButton.getText());
+            CardLayout c1 = (CardLayout)(cards.getLayout());
+            c1.show(cards, INSETCARD);
+        });
+        return newButton;
     }
     // Resizes images to fit within their containers correctly
     private ImageIcon resizeImage(int newWidth, int newHeight, String filePath) {
