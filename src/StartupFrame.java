@@ -230,23 +230,45 @@ public class StartupFrame extends JFrame{
         // South panel block -------------
         JPanel southPanel = new JPanel();
         southPanel.setPreferredSize(new Dimension(100, 30));
-        card.add(southPanel, BorderLayout.SOUTH);
-        
-        // East panel block --------------
-        JPanel eastPanel = new JPanel();
-        eastPanel.setPreferredSize(new Dimension(70, 100));
-        card.add(eastPanel, BorderLayout.EAST);
-
-        // West panel block -------------
-        JPanel westPanel = new JPanel();
-        westPanel.setPreferredSize(new Dimension(70, 100));
-        card.add(westPanel, BorderLayout.WEST);
+        card.add(southPanel, BorderLayout.SOUTH);   
 
         // Central panel with sets
         // Will display 4 sets at a time
         JPanel center = new JPanel(new CardLayout());
         center.setBackground(Color.WHITE);
         
+        int[] cardGroupIndex = {0, 0}; // this array is passed to the left and right button lambdas
+                                       // first value is for the cardGroup, second is for num of total cards
+        // East panel block --------------
+        JPanel eastPanel = new JPanel(new BorderLayout());
+        eastPanel.setPreferredSize(new Dimension(70, 100));
+        JButton rightButton = new JButton("->");
+        rightButton.addActionListener(e -> {
+            cardGroupIndex[0]++;
+            if (cardGroupIndex[0] == cardGroupIndex[1]) {
+                cardGroupIndex[0] = 0;
+            }
+            CardLayout c1 = (CardLayout)(center.getLayout());
+            c1.show(center, Integer.toString(cardGroupIndex[0]));
+        });
+        eastPanel.add(rightButton);
+        card.add(eastPanel, BorderLayout.EAST);
+
+        // West panel block -------------
+        JPanel westPanel = new JPanel(new BorderLayout());
+        eastPanel.setPreferredSize(new Dimension(70, 100));
+        JButton leftButton = new JButton("<-");
+        leftButton.addActionListener(e -> {
+            cardGroupIndex[0]--;
+            if (cardGroupIndex[0] == -1) {
+                cardGroupIndex[0] = cardGroupIndex[1] - 1;
+            }
+            CardLayout c1 = (CardLayout)(center.getLayout());
+            c1.show(center, Integer.toString(cardGroupIndex[0]));
+        });
+        westPanel.add(leftButton);
+        card.add(westPanel, BorderLayout.WEST);
+
         // Create panels that card layout will cycle through
         JPanel newCard = null;
         JButton nextButton;
@@ -257,7 +279,8 @@ public class StartupFrame extends JFrame{
                 if (newCard == null) {
                     newCard = new JPanel();
                 } else { // if it isn't the first iteration, add the previous card and reset newCard
-                    center.add(newCard, cardNum++);
+                    center.add(newCard, Integer.toString(cardNum++));
+                    cardGroupIndex[1]++;
                     newCard = new JPanel();
                 } // after resetting/instantiating newCard, set the layout and add the first button
                 newCard.setLayout(new GridLayout(2, 2, 10, 10));
@@ -266,10 +289,10 @@ public class StartupFrame extends JFrame{
             newCard.add(nextButton);
         }
         // add final card
-        center.add(newCard, cardNum);
+        center.add(newCard, Integer.toString(cardNum));
+        cardGroupIndex[1]++;
 
         card.add(center, BorderLayout.CENTER);
-        
         return card;
     }
 
