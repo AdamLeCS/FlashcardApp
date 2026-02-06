@@ -23,6 +23,7 @@ public class StartupFrame extends JFrame{
     ArrayList<String> allSets = new ArrayList<>();
     FlashcardSet currentSet;
     JPanel cards;
+    
     /*
     JButton openSetsButton;
     JButton newSetButton;
@@ -134,6 +135,7 @@ public class StartupFrame extends JFrame{
         JButton openSetsButton = new JButton("Open a set");
         openSetsButton.setFocusable(false);
         openSetsButton.addActionListener(e -> {
+            cards.add(openSet(), OPENSETCARD);
             CardLayout c1 = (CardLayout)(cards.getLayout());
             c1.show(cards, OPENSETCARD);
         });
@@ -243,7 +245,7 @@ public class StartupFrame extends JFrame{
         JPanel eastPanel = new JPanel(new BorderLayout());
         eastPanel.setPreferredSize(new Dimension(70, 100));
         JButton rightButton = new JButton("->");
-        rightButton.addActionListener(e -> {
+        rightButton.addActionListener(e -> { // this function will go right and loop to the front
             cardGroupIndex[0]++;
             if (cardGroupIndex[0] == cardGroupIndex[1]) {
                 cardGroupIndex[0] = 0;
@@ -258,7 +260,7 @@ public class StartupFrame extends JFrame{
         JPanel westPanel = new JPanel(new BorderLayout());
         eastPanel.setPreferredSize(new Dimension(70, 100));
         JButton leftButton = new JButton("<-");
-        leftButton.addActionListener(e -> {
+        leftButton.addActionListener(e -> { // this function will go left and loop to the front
             cardGroupIndex[0]--;
             if (cardGroupIndex[0] == -1) {
                 cardGroupIndex[0] = cardGroupIndex[1] - 1;
